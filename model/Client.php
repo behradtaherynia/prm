@@ -1,6 +1,6 @@
 <?php
 
-class Client extends WPCustomPost
+class Client extends WPCustomPostType
 {
 
     /**

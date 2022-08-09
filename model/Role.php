@@ -17,7 +17,8 @@ class Role
      */
     private function __construct(string $slug)
     {
-        $this->name = wp_roles()->roles[$slug]['name'];
+//        $this->name = wp_roles()->roles[$slug]['name'];
+        $this->name = translate_user_role($slug);
         $this->slug = $slug;
 
     }

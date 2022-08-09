@@ -4,7 +4,7 @@ class SmartDate
 {
     private int $timestamp;
 
-    private string $format;
+//    private string $format;
     private string $timeZone = 'Asia/Tehran';
 
 
@@ -47,13 +47,13 @@ class SmartDate
         return $this->timestamp;
     }
 
-    /**
-     * @return string
-     */
-    public function getFormat(): string
-    {
-        return $this->format;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getFormat(): string
+//    {
+//        return $this->format;
+//    }
 
     /**
      * @return string
