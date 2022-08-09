@@ -1,5 +1,5 @@
 <?php
-function varex($data)
+function var_ex($data)
 {
     echo '<pre>' . var_export($data, true) . '</pre>';
 
