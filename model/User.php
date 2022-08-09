@@ -11,15 +11,17 @@ class User extends WPClass
      */
     public function __construct(int $ID = 0)
     {
-        $this->ID = $ID;
-
-        /*
-         * (WP_User|false) WP_User object on success, false on failure.
-         */
+        if ($ID > 0) {
+            $this->ID = $ID;
+        } else {
+            $currentUser = wp_get_current_user();
+            $this->ID = $currentUser->ID;
+        }
         $this->userInfo = get_userdata($this->ID);
+
     }
 
-// region Class Public Functions::
+// region Class getter Functions::
 
     /**
      * @return int
@@ -127,8 +129,7 @@ class User extends WPClass
         foreach ($this->getRoles() as $role) {
             if ($by == 'name') {
                 $rolesList[] = strtolower($role->getName());
-            }
-            elseif ($by == 'slug') {
+            } elseif ($by == 'slug') {
                 $rolesList[] = $role->getSlug();
             }
         }
@@ -171,6 +172,80 @@ class User extends WPClass
     {
         return update_user_meta($this->getID(), 'telegram_chat_id', $telegramID);
     }
+
+    /**
+     * @param string $mobile
+     * @return bool
+     */
+    public function updateMobile(string $mobile): bool
+    {
+        return update_user_meta($this->getID(), 'mobile', $mobile);
+    }
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    public function updateEmail(string $email): bool
+    {
+        $userInfo = array('ID' => $this->getID(), 'user_email' => $email);
+        $result = wp_update_user($userInfo);
+        return $result > 0;
+    }
+
+    /**
+     * @param string $firstName
+     * @return bool
+     */
+    public function updateFirstname(string $firstName): bool
+    {
+        $result = update_user_meta($this->getID(), 'first_name', $firstName);
+        return $result == true;
+    }
+
+    /**
+     * @param string $lastName
+     * @return bool
+     */
+
+    public function updateLastname(string $lastName): bool
+    {
+        $result = update_user_meta($this->getID(), 'last_name', $lastName);
+        return $result == true;
+    }
+
+    /**
+     * @param string $nickName
+     * @return bool
+     */
+    public function updateNickname(string $nickName): bool
+    {
+        $result = update_user_meta($this->getID(), 'nickname', $nickName);
+        return $result > 0;
+    }
+
+    /**
+     * @param string $Description
+     * @return bool
+     */
+    public function updateDescription(string $Description): bool
+    {
+        $result = update_user_meta($this->getID(), 'Description', $Description);
+        return $result > 0;
+    }
+
+    /**
+     * @param string $userName
+     * @return bool
+     */
+    public function updateUsername(string $userName): bool
+    {
+        global $wpdb;
+        $result = $wpdb->update($wpdb->users, ['user_login' => $userName], ['ID' => $this->getID()]);
+        return $result > 0;
+    }
+
+
 //endregion
 
 // region Class Access Functions::
@@ -385,8 +460,7 @@ class User extends WPClass
     {
         if ($isMeta) {
             return self::GetUserByMetaData($field, $value);
-        }
-        else {
+        } else {
             $selectedUser = get_user_by($field, $value);
             return !$selectedUser ? false : new User($selectedUser->ID);
         }
@@ -469,8 +543,7 @@ class User extends WPClass
             foreach ($notPaidPerformances as $performance) {
                 if ($performance->isEdited()) {
                     $amount = 0;
-                }
-                else {
+                } else {
                     $amount = Settings::GetPerformanceAmount($performance->getProductionStep()->getID(), $performance->getFeed()->getType()->getID());
                 }
 

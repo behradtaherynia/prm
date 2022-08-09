@@ -8,6 +8,7 @@ abstract class WPCustomPostType extends WPClass
     {
         $this->ID = $ID;
     }
+
 //region Class Getter Functions::
 
     /**
@@ -142,6 +143,7 @@ abstract class WPCustomPostType extends WPClass
         }
         return $attachments;
     }
+
     /**
      * @param string $key
      * @param string $metaValueType
@@ -166,60 +168,167 @@ abstract class WPCustomPostType extends WPClass
 //region update functions::
 
     /**
-     * @param $title
+     * @param string $title
      * @return bool
      */
-    public function updateTitle($title): bool
+    public function updateTitle(string $title): bool
     {
+        Log::Insert(1, $this->getID(), $this->getTitle(), $title);
+
         global $wpdb;
-        $data = array('post_title' => $title);
-        $where = array('ID' => $this->getID());
-        return $wpdb->update($wpdb->posts, $data, $where) > 0;
+        $query = new SmartQuery();
+        $table = $wpdb->posts;
+        $data = [
+            'post_title' => $title,
+        ];
+        $where = [
+            'ID' => $this->getID(),
+        ];
+        $format = [
+            '%s',
+        ];
+        $whereFormat = [
+            '%d',
+        ];
+        $updatedObject = $query->update($table, $data, $where, $format, $whereFormat);
+
+        return $updatedObject != false;
+
     }
 
     /**
-     * @param $content
+     * @param string $publishStatus
      * @return bool
      */
-    public function updateContent($content): bool
+    public function updatePublishStatus(string $publishStatus = 'publish'): bool
     {
+
         global $wpdb;
-        $data = array('post_content' => $content);
-        $where = array('ID' => $this->getID());
-        return $wpdb->update($wpdb->posts, $data, $where) > 0;
+
+        $query = new SmartQuery();
+        $table = $wpdb->posts;
+        $data = [
+            'post_status' => $publishStatus,
+        ];
+        $where = [
+            'ID' => $this->getID(),
+        ];
+        $format = [
+            '%s',
+        ];
+        $whereFormat = [
+            '%d',
+        ];
+        $updatedObject = $query->update($table, $data, $where, $format, $whereFormat);
+
+        return $updatedObject != false;
     }
 
     /**
-     * @param $excerpt
+     * @param string $content
      * @return bool
      */
-    public function updateExcerpt($excerpt): bool
+    public function updateContent(string $content): bool
     {
+        Log::Insert(2, $this->getID(), $this->getContent(), $content);
+
+
         global $wpdb;
-        $data = array('post_excerpt' => $excerpt);
-        $where = array('ID' => $this->getID());
-        return $wpdb->update($wpdb->posts, $data, $where) > 0;
+
+        $query = new SmartQuery();
+        $table = $wpdb->posts;
+        $data = [
+            'post_content' => $content,
+        ];
+        $where = [
+            'ID' => $this->getID(),
+        ];
+        $format = [
+            '%s',
+        ];
+        $whereFormat = [
+            '%d',
+        ];
+        $updatedObject = $query->update($table, $data, $where, $format, $whereFormat);
+
+        return $updatedObject != false;
     }
 
     /**
-     * @param $publishDate
+     * @param string $date :: persian string -> 1392-02-23
      * @return bool
      */
-    public function updatePublishDate($publishDate): bool
+    public function updateDate(string $date): bool
     {
+        $publishDate = new SmartDate($date, 'string', 'jalali');
+
+        Log::Insert(3, $this->getID(), $this->getDate()->getDateStringJalali(), $publishDate->getDateStringJalali());
+
+
         global $wpdb;
-        $data = array('post_date' => $publishDate);
-        $where = array('ID' => $this->getID());
-        return $wpdb->update($wpdb->posts, $data, $where) > 0;
+
+        $query = new SmartQuery();
+        $table = $wpdb->posts;
+        $data = [
+            'post_date' => $publishDate->getDateStringGregorian() . " 00:00:00",
+        ];
+        $where = [
+            'ID' => $this->getID(),
+        ];
+        $format = [
+            '%s',
+        ];
+        $whereFormat = [
+            '%d',
+        ];
+        $updatedObject = $query->update($table, $data, $where, $format, $whereFormat);
+
+        return $updatedObject != false;
     }
 
     /**
-     * @param $thumbnail_id
-     * @return bool|int
+     * @param string $key
+     * @param string $value
+     * @return true
+     * key not exist            => insert       => must return true
+     * key exist but value new  => update value => must return true
+     * key exist but value same => return false => we return true
      */
-    protected function updateThumbnail($thumbnail_id): bool
+    protected function updatePostMeta(string $key, string $value): bool
     {
-        return set_post_thumbnail($this->getID(), $thumbnail_id);
+        update_post_meta($this->getID(), $key, $value);
+        return true;
+    }
+
+    /**
+     * @param int[] $attachments
+     * @param string $attachmentDBKeyName
+     * @param int $logTypeID
+     * @return bool
+     */
+    protected function updateAttachmentsBy(array $attachments, string $attachmentDBKeyName, int $logTypeID): bool
+    {
+        // region Log Old Files Holder::
+        $oldFiles = $this->getAttachmentsBy($attachmentDBKeyName);
+        $oldFilesLinks = [];
+        foreach ($oldFiles as $file) {
+            $oldFilesLinks[] = $file->getAttachmentURL();
+        }
+        //endregion
+
+        $result = $this->updatePostMeta($attachmentDBKeyName, serialize($attachments));
+
+        // region New Old Files Holder::
+        $newFiles = $this->getAttachmentsBy($attachmentDBKeyName);
+        $newFilesLinks = [];
+        foreach ($newFiles as $file) {
+            $newFilesLinks[] = $file->getAttachmentURL();
+        }
+        //endregion
+
+        Log::Insert($logTypeID, $this->getID(), implode('<br>', $oldFilesLinks), implode('<br>', $newFilesLinks));
+
+        return $result;
     }
 
     protected function updateStatus()
@@ -285,6 +394,7 @@ abstract class WPCustomPostType extends WPClass
     }
 
 //endregion
+
 // region Class Protected Functions::
 
     protected function getSortablePropertiesList(): array
