@@ -8,7 +8,7 @@ abstract class WPCustomPostType
     {
         $this->ID = $ID;
     }
-    //region Class Getter Functions::
+//region Class Getter Functions::
 
     /**
      * @return int
@@ -20,18 +20,52 @@ abstract class WPCustomPostType
 
     /**
      * @param string $postType
-     * @param int $categoryID
-     * @return int[]|WP_Post[]
+     * @param string $CustomTaxonomy
+     * @param array $termID
+     * @return WP_Query
      */
-    public function getByCategoryID(string $postType, int $categoryID)
+    protected function getByCategoryID(string $postType, string $CustomTaxonomy, array $termID): WP_Query
     {
-        $defaults_param = array(
-            'numberposts'      	=> -1,
-            'post_type'        	=> $postType,
-            'category' 			=> $categoryID ,
-            'suppress_filters'	=> false
-        );
-        return get_posts($defaults_param);
+        $args = [
+            'post_type' => "$postType",
+            'tax_query' => [
+                [
+                    'taxonomy' => "$CustomTaxonomy",
+//                    'field'    => 'slug',
+//                    'terms'    => array( 'term1', 'term2' ),
+                    'field' => 'term_id',
+                    'terms' => $termID,
+                    'include_children' => false // Remove if you need posts from term 7 child terms
+                ],
+            ],
+            // Rest of arguments continues here
+        ];
+        return new WP_Query($args);
+    }
+
+    /**
+     * @param string $postType
+     * @param string $CustomTaxonomy
+     * @param array $termSlug
+     * @return WP_Query
+     */
+    protected function getByCategorySlug(string $postType, string $CustomTaxonomy, array $termSlug): WP_Query
+    {
+        $args = [
+            'post_type' => "$postType",
+            'tax_query' => [
+                [
+                    'taxonomy' => "$CustomTaxonomy",
+                    'field' => 'slug',
+                    'terms' => $termSlug,
+//                    'field' => 'term_id',
+//                    'terms' => $termSlug,
+                    'include_children' => false // Remove if you need posts from term 7 child terms
+                ],
+            ],
+            // Rest of arguments continues here
+        ];
+        return new WP_Query($args);
     }
 
     /**
@@ -47,7 +81,7 @@ abstract class WPCustomPostType
      */
     public function getContent(): string
     {
-        return get_the_content(null, null, $this->getID());
+        return get_the_content(null, false, $this->getID());
     }
 
     /**
@@ -92,6 +126,8 @@ abstract class WPCustomPostType
     {
         return get_the_post_thumbnail_url($this->getID());
     }
+
+
 //endregion
 
 //region update functions::
@@ -148,11 +184,19 @@ abstract class WPCustomPostType
      * @param $thumbnail_id
      * @return bool|int
      */
-    protected function updateThumbnail($thumbnail_id):bool
+    protected function updateThumbnail($thumbnail_id): bool
     {
-       return set_post_thumbnail($this->getID(),$thumbnail_id);
+        return set_post_thumbnail($this->getID(), $thumbnail_id);
+    }
+
+    protected function updateStatus()
+    {
+
     }
 
 //endregion
 
+//region Static functions::
+
+//endregion
 }
