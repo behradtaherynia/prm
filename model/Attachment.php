@@ -1,6 +1,6 @@
 <?php
 
-class Attachment extends WPCustomPost
+class Attachment extends WPCustomPostType
 {
 
     /**
