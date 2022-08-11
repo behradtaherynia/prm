@@ -1,4 +1,5 @@
 <?php
+require_once get_template_directory() . '/autoload.php';
 
 function var_ex($data)
 {
@@ -6,17 +7,6 @@ function var_ex($data)
 
 }
 
-require_once get_template_directory() . '/autoload.php';
-
-//spl_autoload_register('myAutoloader');
-//
-//function myAutoloader($className)
-//{
-//    $path = get_template_directory() . '/model/';
-////    $path = '/model/';
-//
-//    include $path.$className.'.php';
-//}
 //include_once get_template_directory() . '/model/WPClass.php';
 //include_once get_template_directory() . '/model/WPCustomPostType.php';
 //include_once get_template_directory() . '/model/WPTerm.php';

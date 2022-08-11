@@ -350,7 +350,14 @@ abstract class WPCustomPostType extends WPClass
      * @param string $order
      * @return array
      */
-    protected static function Get(string $customPostType, string $className, array $metaQuery = [], int $count = -1, SmartDate $from = null, SmartDate $to = null, string $orderBy = 'date', string $order = 'DESC'): array
+    protected static function Get(
+        string    $customPostType,
+        string    $className,
+        array     $metaQuery = [],
+        int       $count = -1,
+        SmartDate $from = null, SmartDate $to = null,
+        string    $orderBy = 'date', string $order = 'DESC'
+    ): array
     {
         if ($count < 1) $count = -1;
         if ($from == null) {
