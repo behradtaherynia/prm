@@ -1,12 +1,13 @@
 <?php
 require_once get_template_directory() . '/autoload.php';
 
+
 function var_ex($data)
 {
-    echo '<pre>' . var_export($data, true) . '</pre>';
-
+    echo '<pre style="direction: ltr">' . var_export($data, true) . '</pre>';
 }
 
+//var_ex($results);
 //include_once get_template_directory() . '/model/WPClass.php';
 //include_once get_template_directory() . '/model/WPCustomPostType.php';
 //include_once get_template_directory() . '/model/WPTerm.php';

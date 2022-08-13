@@ -35,7 +35,7 @@ class Service extends WPCustomPostType
      */
     public function getTreatments(): array
     {
-        return self::Get('treatment','Treatment',$meta_query = array(
+        return self::Get('treatment','Treatment',array(
             'relation' => 'AND',
             array(
                 'key'     => 'ServiceID',
@@ -51,7 +51,7 @@ class Service extends WPCustomPostType
      */
     public function getCompleteTreatments(): array
     {
-        return self::Get('treatment','Treatment',$meta_query = array(
+        return self::Get('treatment','Treatment', array(
             'relation' => 'AND',
             array(
                 'key'     => 'ServiceID',
@@ -73,7 +73,7 @@ class Service extends WPCustomPostType
      */
     public function getIncompleteTreatments(): array
     {
-        return self::Get('treatment','Treatment',$meta_query = array(
+        return self::Get('treatment','Treatment',array(
             'relation' => 'AND',
             array(
                 'key'     => 'ServiceID',
