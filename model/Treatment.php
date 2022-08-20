@@ -57,5 +57,28 @@ class Treatment extends WPCustomPostType
 
     }
 
+    /**
+     * @param $clientID
+     * @param $dossierID
+     * @return array
+     */
+    public static function GetTreatmentsByDossierID($clientID, $dossierID): array
+    {
+        return self::Get('treatment','Treatment',array(
+            'relation' => 'AND',
+            array(
+                'key'     => 'ClientID',
+                'value'   => $clientID,
+                'compare' => '=',
+                'type'    => 'NUMERIC',
+            ),
+            array(
+                'key'     => 'DossierID',
+                'value'   => $dossierID,
+                'compare' => '=',
+                'type'    => 'NUMERIC',
+            )
+        ));
+}
 
 }

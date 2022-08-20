@@ -331,9 +331,8 @@ abstract class WPCustomPostType extends WPClass
         return $result;
     }
 
-    protected function updateStatus()
+    protected function updateStatus(bool $val)
     {
-
     }
 
 //endregion
@@ -350,6 +349,7 @@ abstract class WPCustomPostType extends WPClass
      * @param string $order
      * @return array
      */
+
     protected static function Get(
         string    $customPostType,
         string    $className,
@@ -400,6 +400,34 @@ abstract class WPCustomPostType extends WPClass
 
     }
 
+    /**
+     * @param string $className
+     * @param int $ID
+     * @return mixed
+     */
+    protected static function __Create(string $className, int $ID)
+    {
+        $_selectedObject = get_post($ID);
+        return $_selectedObject == null || $_selectedObject->post_type != strtolower($className) ? false : new $className($ID);
+    }
+
+    /**
+     * @param string $customPostType
+     * @param string $className
+     * @param string $title
+     * @return Client|false
+     */
+    protected static function __Insert(string $customPostType, string $className, string $title)
+    {
+        $ID = wp_insert_post(
+            array(
+                'post_type' => $customPostType,
+                'post_status' => 'publish',
+                'post_title' => $title,
+            )
+        );
+        return !is_wp_error($ID) ? new $className($ID) : false;
+    }
 //endregion
 
 // region Class Protected Functions::
