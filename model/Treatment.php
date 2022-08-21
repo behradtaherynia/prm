@@ -17,7 +17,7 @@ class Treatment extends WPCustomPostType
      */
     public function getSessions(): array
     {
-        return self::Get('session', 'Session',
+        return parent::Get('session', 'Session',
             array(
                 'key' => 'TreatmentID',
                 'value' => $this->getID(),
@@ -26,6 +26,15 @@ class Treatment extends WPCustomPostType
             )
         );
     }
+
+    /**
+     * @return int
+     */
+    public function getDossier(): int
+    {
+        return $this->getPostMeta('DossierID', 'int');
+    }
+
 
     public function getFollowups()
     {

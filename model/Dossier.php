@@ -40,4 +40,9 @@ class Dossier extends WPCustomPostType
 
     }
 
+    public function getPatient()
+    {
+        
+    }
+
 }

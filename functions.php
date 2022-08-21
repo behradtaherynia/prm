@@ -1,5 +1,7 @@
 <?php
 require_once get_template_directory() . '/autoload.php';
+$a = new Followup(1);
+var_ex($a);
 //spl_autoload_register('myAutoloader');
 //function myAutoloader(){
 //    foreach (glob(__DIR__ . '/functions/*.php') as $my_theme_filename) {

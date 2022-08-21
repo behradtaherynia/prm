@@ -18,9 +18,21 @@ class Session extends WPCustomPostType
 
     }
 
-    public function getTreatment()
-    {
 
+    /**
+     * @return WP_Post|null
+     */
+    public function getTreatment(): ?WP_Post
+    {
+//       return self::Get('treatment', 'Treatment',
+//            array(
+//                'key'     => 'SessionID',
+//                'value'   => $this->getID(),
+//                'compare' => '=',
+//                'type'    => 'NUMERIC',
+//            ));
+        $result = get_post($this->getPostMeta('TreatmentID', 'int'));
+        return $result;
     }
 
     public function getCurrentSession()
@@ -37,6 +49,7 @@ class Session extends WPCustomPostType
     {
 
     }
+
 //endregion
 
 //region short functions

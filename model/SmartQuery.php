@@ -182,7 +182,7 @@ class SmartQuery
      * @param string $output :: ARRAY_A | ARRAY_N | OBJECT | OBJECT_K
      * @return array :: array returned
      */
-    public function execute(string $output = OBJECT): array
+    public function execute(string $output = 'OBJECT'): array
     {
         global $wpdb;
         $query = $this->queryGenerate();

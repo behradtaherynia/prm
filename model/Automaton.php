@@ -53,7 +53,7 @@ class Automaton extends WPCustomPostType
      * @param bool $val
      * @return bool|true
      */
-    public function updateStatus(bool $val): bool
+    public function updateStatus(bool $val=true): bool
     {
        return $this->updatePostMeta('Automaton_Status', $val);
     }

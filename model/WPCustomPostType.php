@@ -331,7 +331,7 @@ abstract class WPCustomPostType extends WPClass
         return $result;
     }
 
-    protected function updateStatus(bool $val)
+    protected function updateStatus()
     {
     }
 
