@@ -14,12 +14,6 @@ class Followup
 
     /**
      * @param int $ID
-     * @param int $statusID
-     * @param int $typeID
-     * @param int $contentTypeID
-     * @param int $formID
-     * @param int $sessionID
-     * @param string $date
      */
     public function __construct(int $ID)
     {
@@ -133,20 +127,24 @@ class Followup
     public function getTreatment(): Treatment
     {
         $result = $this->getSession();
-        $treatment= $result->getTreatment();
+        $treatment = $result->getTreatment();
         return new Treatment($treatment->ID);
     }
 
     public function getDossier(): Dossier
     {
         $treatment = $this->getTreatment();
-        $dossierID=$treatment->getDossier();
+        $dossierID = $treatment->getDossier();
         return new Dossier($dossierID);
     }
 
-    public function getPatient()
+    /**
+     * @return Patient
+     */
+    public function getPatient(): Patient
     {
-
+        $dossier = $this->getDossier();
+        return new Patient($dossier->getPatient());
 
     }
 

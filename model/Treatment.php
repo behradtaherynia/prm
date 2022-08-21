@@ -35,6 +35,15 @@ class Treatment extends WPCustomPostType
         return $this->getPostMeta('DossierID', 'int');
     }
 
+    /**
+     * @return Patient
+     */
+    public function getPatient(): Patient
+    {
+        $patientID = $this->getPostMeta('PatientID', 'int');
+        return new Patient($patientID);
+    }
+
 
     public function getFollowups()
     {

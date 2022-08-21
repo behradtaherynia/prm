@@ -42,7 +42,8 @@ class Dossier extends WPCustomPostType
 
     public function getPatient()
     {
-        
+        return $this->getPostMeta('PatientID', 'int');
+
     }
 
 }

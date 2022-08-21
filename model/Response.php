@@ -1,14 +1,14 @@
 <?php
 
-class PatientHistory
+class Response
 {
 
 //region class properties
     private int $ID;
     private int $clientID;
-    private int $dossierID;
-    private int $questionID;
-    private int $questionageID;
+    private string $dossierID;
+    private string $fieldID;
+    private string $formID;
     private string $answer;
     private string $date;
 //endregion
@@ -23,15 +23,15 @@ class PatientHistory
         global $wpdb;
         if ($this->ID > 0) {
             $query = new SmartQuery();
-            $query->select('*', $wpdb->prefix . 'patient_history');
-            $query->from($wpdb->prefix . 'patient_history');
-            $query->where('patient_history_id', $wpdb->prefix . 'patient_history', '=', $ID);
+            $query->select('*', $wpdb->prefix . 'response');
+            $query->from($wpdb->prefix . 'response');
+            $query->where('response_id', $wpdb->prefix . 'response', '=', $ID);
             $result = $query->execute();
             if ($result) {
                 $this->clientID = $result[0]->client_id;
                 $this->dossierID = $result[0]->dossier_id;
-                $this->questionID = $result[0]->question_id;
-                $this->questionageID = $result[0]->questionage_id;
+                $this->fieldID = $result[0]->field_id;
+                $this->formID = $result[0]->form_id;
                 $this->answer = $result[0]->answer;
                 $this->date = $result[0]->date;
             }
@@ -66,19 +66,19 @@ class PatientHistory
     }
 
     /**
-     * @return Question
+     * @return Field
      */
-    public function getQuestionID(): Question
+    public function getField(): Field
     {
-        return new Question($this->questionID);
+        return new Field($this->fieldID);
     }
 
     /**
-     * @return Questionage
+     * @return Form
      */
-    public function getQuestionageID(): Questionage
+    public function getForm(): Form
     {
-        return new Questionage($this->questionageID);
+        return new Form($this->formID);
     }
 
     /**
@@ -98,6 +98,7 @@ class PatientHistory
     }
 
 //endregion
+
 
 //region CRUD functions
     public static function Insert(int $clientID, int $dossierID, int $questionID, int $questionageID, string $answer)
