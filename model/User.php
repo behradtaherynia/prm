@@ -160,6 +160,15 @@ class User extends WPClass
                 return '0' . $mobile;
         }
     }
+
+    /**
+     * @return Client
+     */
+    public function getClient(): Client
+    {
+       $result=intval(get_user_meta($this->getID(), 'Client_ID'));
+        return new Client($result);
+    }
 //endregion
 
 // region Class Update Functions::
@@ -243,6 +252,11 @@ class User extends WPClass
         global $wpdb;
         $result = $wpdb->update($wpdb->users, ['user_login' => $userName], ['ID' => $this->getID()]);
         return $result > 0;
+    }
+
+    public function updateClient(int $clientID): bool
+    {
+        return update_user_meta($this->getID(), 'Client_ID', $clientID);
     }
 
 
@@ -488,6 +502,20 @@ class User extends WPClass
     {
         $users = get_users();
         return self::ConvertUsersList($users);
+
+    }
+
+    /**
+     * @return array
+     */
+    public static function GetAllUsersIDOnly(): array
+    {
+        $users = get_users();
+        $list = array();
+        foreach ($users as $user) {
+            $list[] = $user->ID;
+        }
+        return $list;
 
     }
 

@@ -72,7 +72,6 @@ class WPAction
     public static function EnqueueStyle(string $handle, string $location, array $deps = [], string $version = '1.0.0', string $locationType = 'directory', bool $addToAdmin = true, bool $addToApp = false)
     {
         if ($addToAdmin) {
-
             add_action('admin_enqueue_scripts', function () use ($handle, $location, $deps, $version, $locationType) {
                 wp_enqueue_style($handle, (($locationType == 'directory') ? TEMPLATE_STYLESHEETS_URL : '') . $location, $deps, $version);
             });

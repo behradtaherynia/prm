@@ -158,10 +158,16 @@ abstract class WPCustomPostType extends WPClass
         elseif ($metaValueType == 'bool')
             return $metaValue;
         elseif ($metaValueType == 'array')
-            return !$metaValue ? [] : unserialize($metaValue);
+            return !$metaValue ? [] : $metaValue;
+//            return !$metaValue ? [] : unserialize($metaValue);
         else
             return !$metaValue ? '' : $metaValue;
 
+    }
+
+    protected function getActivation()
+    {
+       return $this->getPostMeta('Activation_Status');
     }
 //endregion
 
@@ -173,7 +179,7 @@ abstract class WPCustomPostType extends WPClass
      */
     public function updateTitle(string $title): bool
     {
-        Log::Insert(1, $this->getID(), $this->getTitle(), $title);
+//        Log::Insert(1, $this->getID(), $this->getTitle(), $title);
 
         global $wpdb;
         $query = new SmartQuery();
@@ -262,7 +268,7 @@ abstract class WPCustomPostType extends WPClass
     {
         $publishDate = new SmartDate($date, 'string', 'jalali');
 
-        Log::Insert(3, $this->getID(), $this->getDate()->getDateStringJalali(), $publishDate->getDateStringJalali());
+//        Log::Insert(3, $this->getID(), $this->getDate()->getDateStringJalali(), $publishDate->getDateStringJalali());
 
 
         global $wpdb;
@@ -288,13 +294,13 @@ abstract class WPCustomPostType extends WPClass
 
     /**
      * @param string $key
-     * @param string $value
+     * @param $value
      * @return true
      * key not exist            => insert       => must return true
      * key exist but value new  => update value => must return true
      * key exist but value same => return false => we return true
      */
-    protected function updatePostMeta(string $key, string $value): bool
+    protected function updatePostMeta(string $key, $value): bool
     {
         update_post_meta($this->getID(), $key, $value);
         return true;
@@ -331,8 +337,9 @@ abstract class WPCustomPostType extends WPClass
         return $result;
     }
 
-    protected function updateStatus()
+    protected function updateActivation($value): bool
     {
+       return $this->updatePostMeta('Activation_Status', $value);
     }
 
 //endregion
