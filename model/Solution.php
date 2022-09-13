@@ -44,4 +44,48 @@ class Solution extends WPCustomPostType
     {
         return ['solution'];
     }
+
+    /**
+     * @return array Solution
+     */
+    public static function GetAllSolutionList(): array
+    {
+        return parent::GetAll('solution', 'Solution');
+    }
+
+    /**
+     * @return array
+     */
+    public static function GetActiveS(): array
+    {
+        return self::Get(
+            'solution',
+            'Solution',
+            [
+                array(
+                    'key' => 'Activation_Status',
+                    'value' => 'true',
+                    'compare' => '='
+                )
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public static function GetInactiveS(): array
+    {
+        return self::Get(
+            'solution',
+            'Solution',
+            [
+                array(
+                    'key' => 'Activation_Status',
+                    'value' => 'false',
+                    'compare' => '='
+                )
+            ]
+        );
+    }
 }

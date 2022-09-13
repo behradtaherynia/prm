@@ -1,8 +1,6 @@
 <?php
-function postActivation(string $activationStatus): string
+function activationField(string $activationStatus): string
 {
-//    $currentPostObject = new $classname($postID);
-//    $value = $currentPostObject->getActivation();
     $value = $activationStatus;
     $html = '<div class="misc-pub-section"><span class="dashicons dashicons-plugins-checked"></span>        <label class="statuslabel" for="wdm_new_field">وضعیت را انتخاب کنید:</label>
         <br/>
@@ -15,6 +13,6 @@ function postActivation(string $activationStatus): string
 
 function titleField(string $clientTitle): string
 {
-//    $currentPostObject = new $classname($postID);
-    return $html = '<input type="text" name="titlename" id="" Value="' . $clientTitle . '">';
+    return $html = '<input type="text" name="titlename" id="" Value="' . $clientTitle . '"' . (get_post_type() == 'service' ? 'readonly' : '') . '>';
+
 }

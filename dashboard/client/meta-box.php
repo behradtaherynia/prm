@@ -1,5 +1,5 @@
 <?php
-if (Client::IsThisClient() && WPInstrument::IsEditCustomPostType()) {
+if (strpos($_SERVER['REQUEST_URI'], "post-new") == true && $_GET['post_type'] == 'service' || Client::IsThisClient() && WPInstrument::IsEditCustomPostType()) {
     WPAction::EnqueueStyle('select2css', '/select2.css', [], '1.1');
     WPAction::EnqueueStyle('select2class', '/select2class.css', ['select2css'], '1.1');
 //    WPAction::EnqueueStyle('jalalidatepickercss', '/jalalidatepicker.css', [], '1.0');

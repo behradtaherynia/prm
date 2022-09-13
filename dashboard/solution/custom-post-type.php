@@ -1,2 +1,2 @@
 <?php
-WPAction::AddCustomPostType('راهکار','solution','راهکارهای موجود','dashicons-admin-network',true);
+WPAction::AddCustomPostType('راهکار','solution','راهکارهای موجود','dashicons-admin-network');

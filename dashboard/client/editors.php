@@ -6,7 +6,7 @@ function clientInfo($ID)
     echo titleField($currentClientObject->getTitle());
     echo ClientAddressField($currentClientObject->getAddress());
     echo clientEmployees($currentClientObject->getEmployees());
-    echo postActivation($currentClientObject->getActivation());
+    echo activationField($currentClientObject->getActivation());
 //        echo dateField($currentClientObject->getDate());
     echo phoneField($currentClientObject->getPrivatePhoneNumber());
 }
