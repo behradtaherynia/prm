@@ -64,7 +64,7 @@ class Solution extends WPCustomPostType
             [
                 array(
                     'key' => 'Activation_Status',
-                    'value' => 'true',
+                    'value' => '1',
                     'compare' => '='
                 )
             ]
@@ -82,7 +82,7 @@ class Solution extends WPCustomPostType
             [
                 array(
                     'key' => 'Activation_Status',
-                    'value' => 'false',
+                    'value' => '2',
                     'compare' => '='
                 )
             ]

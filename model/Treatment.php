@@ -2,6 +2,10 @@
 
 class Treatment extends WPCustomPostType
 {
+    public function getActivation()
+    {
+        return parent::getActivation();
+    }
 
     /**
      * @return Service
@@ -75,6 +79,11 @@ class Treatment extends WPCustomPostType
 
     }
 
+    public function updateActivation($value): bool
+    {
+        return parent::updateActivation($value);
+    }
+
     /**
      * @param $clientID
      * @param $dossierID
@@ -98,5 +107,62 @@ class Treatment extends WPCustomPostType
             )
         ));
 }
+
+    /**
+     * @return bool
+     */
+    public static function IsThisTreatment(): bool
+    {
+        return WPInstrument::CheckCurrentCustomPostTypeInArray(self::GetServiceCustomPostTypes());
+
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function GetServiceCustomPostTypes(): array
+    {
+        return ['treatment'];
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function getOngoing(): array
+    {
+       return parent::Get('treatment', 'Treatment', [
+            array( 'key' => 'Activation_Status',
+                'value' => '1',
+                'compare' => '=')
+
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFinished(): array
+    {
+        return parent::Get('treatment', 'Treatment', [
+            array( 'key' => 'Activation_Status',
+                'value' => '2',
+                'compare' => '=')
+
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCanceled(): array
+    {
+        return parent::Get('treatment', 'Treatment', [
+            array( 'key' => 'Activation_Status',
+                'value' => '3',
+                'compare' => '=')
+
+        ]);
+    }
 
 }

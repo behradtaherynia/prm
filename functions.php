@@ -17,7 +17,7 @@ $Regex = new RegexIterator($Iterator, '/^.+\.php$/i', RegexIterator::GET_MATCH);
 foreach ($Regex as $yourfiles) {
     include_once $yourfiles[0];
 }
-
+$a=new \db\DB();
 function var_ex($data)
 {
     echo '<pre style="direction: ltr">' . var_export($data, true) . '</pre>';

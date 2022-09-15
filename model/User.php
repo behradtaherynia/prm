@@ -166,7 +166,7 @@ class User extends WPClass
      */
     public function getClient(): Client
     {
-       $result=intval(get_user_meta($this->getID(), 'Client_ID'));
+       $result=get_user_meta($this->getID(), 'Client_ID',true);
         return new Client($result);
     }
 //endregion

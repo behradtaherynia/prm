@@ -15,12 +15,6 @@ class Patient
 //region class constructor
     /**
      * @param int $ID
-     * @param int $IDCode
-     * @param int $name
-     * @param int $lastName
-     * @param int $fullName
-     * @param int $phone
-     * @param int $address
      */
     public function __construct(int $ID)
     {
@@ -221,6 +215,24 @@ class Patient
         $query = new SmartQuery();
         return $query->update($wpdb->prefix . 'patient', $data, $where);
     }
+
 //endregion
 
+    public static function doesExist($IDCode)
+    {
+        global $wpdb;
+
+            $query = new SmartQuery();
+            $query->select('*', $wpdb->prefix . 'patient');
+            $query->from($wpdb->prefix . 'patient');
+            $query->where('id_code', $wpdb->prefix . 'patient', '=', $IDCode);
+            $result = $query->execute();
+            if ($result) {
+                return $result;
+            }
+            else{
+                return false;
+            }
+
+    }
 }

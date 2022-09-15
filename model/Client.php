@@ -120,10 +120,11 @@ class Client extends WPCustomPostType
             'service',
             'Service',
             [
-                'key' => 'clientID',
-                'value' => $this->getID(),
-                'compare' => '=',
-                'type' => 'NUMERIC'
+                array(
+                    'key' => 'ClientID',
+                    'value' => $this->getID(),
+                    'compare' => '='
+                    )
             ]
         );
     }
@@ -324,7 +325,7 @@ class Client extends WPCustomPostType
             [
                 array(
                     'key' => 'Activation_Status',
-                    'value' => 'true',
+                    'value' => '1',
                     'compare' => '='
                 )
             ]
@@ -342,7 +343,7 @@ class Client extends WPCustomPostType
             [
                 array(
                     'key' => 'Activation_Status',
-                    'value' => 'false',
+                    'value' => '2',
                     'compare' => '='
                 )
             ]
