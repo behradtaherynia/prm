@@ -11,8 +11,15 @@ function activationField(string $activationStatus): string
 
 }
 
-function titleField(string $clientTitle): string
+function titleField(string $clientTitle,$attName='titlename',$statusResult=false): string
 {
-    return $html = '<input type="text" name="titlename" id="" Value="' . $clientTitle . '"' . (get_post_type() == 'service' ||'treatment' ? 'readonly' : '') . '>';
+    $includeTypes=['service','treatment'];
+    $currentType = get_post_type();
+//    $statusResult = false;
+    if (in_array($currentType, $includeTypes)) {
+        $statusResult=true;
+    }
+
+    return $html = '<p><input type="text" name="'.$attName.'" id="" Value="' . $clientTitle . '"' . ($statusResult == true ? 'readonly' : '') . '></p>';
 
 }

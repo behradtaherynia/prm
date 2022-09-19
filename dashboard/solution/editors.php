@@ -1,4 +1,7 @@
 <?php
+
+use model\Solution;
+
 function solutionInfo($solutionID)
 {
     $currentPostObject = new Solution($solutionID);

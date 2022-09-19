@@ -1,4 +1,8 @@
 <?php
+
+use model\Solution;
+use model\WPAction;
+
 if (Solution::IsThisSolution()) {
     WPAction::Save('solutionMetas');
     function solutionMetas($postID)

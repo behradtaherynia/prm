@@ -1,4 +1,9 @@
 <?php
+
+use model\Client;
+use model\User;
+use model\WPAction;
+
 if (Client::IsThisClient()) {
     WPAction::Save('clientMetas');
     function clientMetas($post_id)

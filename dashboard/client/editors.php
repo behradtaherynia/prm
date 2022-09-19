@@ -1,4 +1,7 @@
 <?php
+
+use model\Client;
+
 function clientInfo($ID)
 {
     $currentClientObject = new Client($ID);

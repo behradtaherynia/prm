@@ -1,9 +1,12 @@
 <?php
 
+use model\SmartDate;
+use model\User;
+
 function clientEmployees(array $clientEmployees): string
 {
     $totalUsers = User::GetAllUsers();
-//    $currentPostObject = new Client($postID);
+//    $currentPostObject = new model\Client($postID);
 //    $appendedEmployees = $currentPostObject->getEmployees();
     $appendedEmployees = $clientEmployees;
 

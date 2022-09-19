@@ -1,4 +1,8 @@
 <?php
+
+use model\Client;
+use model\Solution;
+
 function clientToServiceField($appended_posts): string
 {
 

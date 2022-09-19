@@ -1,4 +1,8 @@
 <?php
+
+use model\Service;
+use model\WPAction;
+
 if (Service::IsThisService()) {
     WPAction::Save('serviceSaveCallBack');
     function serviceSaveCallBack($postID)

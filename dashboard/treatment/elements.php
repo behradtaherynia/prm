@@ -1,4 +1,7 @@
 <?php
+
+use model\User;
+
 function myClientServiceField($appended_post): string
 {
 

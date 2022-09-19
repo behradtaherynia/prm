@@ -1,4 +1,9 @@
 <?php
+
+use model\Treatment;
+use model\WPAction;
+use model\WPInstrument;
+
 if (strpos($_SERVER['REQUEST_URI'], "post-new") == true && $_GET['post_type'] == 'treatment' || WPInstrument::IsEditCustomPostType() && Treatment::IsThisTreatment()) {
     WPAction::MetaBox(['treatment'], 'treatmentInfo', 'اطلاعات درمان', 'treatmentInfoBox','advanced','default');
     WPAction::EnqueueStyle('select2css', '/select2.css', [], '1.1');

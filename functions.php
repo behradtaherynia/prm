@@ -1,4 +1,5 @@
 <?php
+
 define('TEMPLATE_DIR', get_template_directory());//     /home3/tadbirneg/public_html/wp-content/themes/tadbirnegar
 define('TEMPLATE_URL', get_template_directory_uri());//   https://tadbirnegar.net/wp-content/themes/tadbirnegar
 define('HOME_URL', home_url());//   https://tadbirnegar.net
@@ -17,7 +18,6 @@ $Regex = new RegexIterator($Iterator, '/^.+\.php$/i', RegexIterator::GET_MATCH);
 foreach ($Regex as $yourfiles) {
     include_once $yourfiles[0];
 }
-$a=new \db\DB();
 function var_ex($data)
 {
     echo '<pre style="direction: ltr">' . var_export($data, true) . '</pre>';

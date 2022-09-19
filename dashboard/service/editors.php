@@ -1,4 +1,7 @@
 <?php
+
+use model\Service;
+
 function serviceInfo($postID)
 {
     $clientLabel = '<p><label for="select2_service_client">انتخاب کارفرما:</label>';
