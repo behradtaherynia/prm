@@ -12,11 +12,14 @@ if (Client::IsThisClient()) {
 
 
         if (isset($_POST['client_select2_emps'])) {
-            $currentClient->updatePostMeta('Client_Employees', $_POST['client_select2_emps']);
+//            $currentClient->updatePostMeta('Client_Employees', $_POST['client_select2_emps']);
+            $currentClient->updateStaff( $_POST['client_select2_emps']);
             foreach ($_POST['client_select2_emps'] as $client_select_emp) {
                 $employee = new User($client_select_emp);
                 $employee->updateClient($post_id);
             }
+        } else {
+
         }
 
         if (isset($_POST['activationpost'])) {

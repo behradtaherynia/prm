@@ -95,4 +95,22 @@ class Dossier extends WPCustomPostType
         return ['dossier'];
     }
 
+    public static function DoesExist(int $patientID, int $clientID)
+    {
+        $result= self::Get('dossier', 'model\Dossier', [
+            'relation' => 'AND',
+            array(
+                'key' => 'ClientID',
+                'value' => $clientID,
+                'compare' => '='
+            ),
+            array(
+                'key' => 'PatientID',
+                'value' => $patientID,
+                'compare' => '='
+            )
+        ]);
+        return $result==true?$result:false;
+    }
+
 }

@@ -554,7 +554,6 @@ class User extends WPClass
         return $list;
     }
 
-
 // endregion
 
 

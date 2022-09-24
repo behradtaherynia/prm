@@ -11,15 +11,32 @@ function activationField(string $activationStatus): string
 
 }
 
-function titleField(string $clientTitle,$attName='titlename',$statusResult=false): string
+function titleField(string $clientTitle, $attName = 'titlename', $statusResult = false): string
 {
-    $includeTypes=['service','treatment'];
+    $includeTypes = ['service', 'treatment'];
     $currentType = get_post_type();
 //    $statusResult = false;
     if (in_array($currentType, $includeTypes)) {
-        $statusResult=true;
+        $statusResult = true;
     }
 
-    return $html = '<p><input type="text" name="'.$attName.'" id="" Value="' . $clientTitle . '"' . ($statusResult == true ? 'readonly' : '') . '></p>';
+    return $html = '<p><input type="text" name="' . $attName . '" id="" Value="' . $clientTitle . '"' . ($statusResult == true ? 'readonly' : '') . '></p>';
 
+}
+
+function createRadio($name, $options, $default = ''): string
+{
+    $name = htmlentities($name);
+
+    $html = '';
+    foreach ($options as $label => $value) {
+        $value = htmlentities($value);
+        var_ex($value);
+        $html .= '<input type="radio" ';
+        if ($value == $default) {
+            $html .= ' checked="checked" ';
+        };
+        $html .= ' name="' . $name . '" value="' . $value . '" />' . $label . '<br />' . "\n";
+    };
+    return $html;
 }

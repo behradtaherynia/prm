@@ -2,8 +2,6 @@
 
 namespace model;
 
-use WP_Post;
-use function get_post;
 
 class Session extends WPCustomPostType
 {
@@ -25,9 +23,9 @@ class Session extends WPCustomPostType
 
 
     /**
-     * @return WP_Post|null
+     * @return Treatment
      */
-    public function getTreatment(): ?WP_Post
+    public function getTreatment(): Treatment
     {
 //       return self::Get('treatment', 'model\Treatment',
 //            array(
@@ -37,7 +35,7 @@ class Session extends WPCustomPostType
 //                'type'    => 'NUMERIC',
 //            ));
         $result = get_post($this->getPostMeta('TreatmentID', 'int'));
-        return $result;
+        return new Treatment($result->ID);
     }
 
     public function getCurrentSession()
@@ -50,7 +48,7 @@ class Session extends WPCustomPostType
 
     }
 
-    public function getPreceptions()
+    public function getPerceptions()
     {
 
     }
@@ -63,7 +61,7 @@ class Session extends WPCustomPostType
 
     }
 
-    public function insertPreception()
+    public function insertPerception()
     {
 
     }

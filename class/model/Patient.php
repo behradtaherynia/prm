@@ -227,7 +227,7 @@ class Patient
 //        return !$insertedObject ? false : new Patient($insertedObject->ID);
     }
 
-    public static function doesExist($IDCode)
+    public static function DoesExist($IDCode)
     {
         global $wpdb;
 

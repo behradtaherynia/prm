@@ -7,6 +7,7 @@ function myClientServiceField($appended_post): string
 
     $myClient = new User();
     $client = $myClient->getClient();
+//    var_ex($client->getDossierS());
     $clientServices = $client->getServices();
     $html = '<select id="select2_service_client" name="service_select2_client" style="width:99%;max-width:25em;" ><option></option> ';
     foreach ($clientServices as $clientService) {
