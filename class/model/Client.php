@@ -143,7 +143,6 @@ class Client extends WPCustomPostType
      */
     public function getDossierS(): array
     {
-        var_ex($this->getID());
         return self::Get(
             'dossier',
             'model\Dossier',

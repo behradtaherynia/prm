@@ -18,9 +18,9 @@ if (Client::IsThisClient()) {
                 $employee = new User($client_select_emp);
                 $employee->updateClient($post_id);
             }
-        } else {
-
         }
+
+
 
         if (isset($_POST['activationpost'])) {
             $currentClient->updateActivation($_POST['activationpost']);

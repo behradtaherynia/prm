@@ -36,11 +36,12 @@ class Treatment extends WPCustomPostType
     }
 
     /**
-     * @return int
+     * @return Dossier
      */
-    public function getDossier(): int
+    public function getDossier(): Dossier
     {
-        return $this->getPostMeta('DossierID', 'int');
+        $result=$this->getPostMeta('DossierID', 'int');
+        return new Dossier($result);
     }
 
     /**
@@ -64,9 +65,6 @@ class Treatment extends WPCustomPostType
     }
 
 
-    /**
-     * @return array|object|stdClass[]|null
-     */
     public function getDescriptions()
     {
         global $wpdb;
@@ -86,6 +84,24 @@ class Treatment extends WPCustomPostType
     public function updateActivation($value): bool
     {
         return parent::updateActivation($value);
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public function updateService($value): bool
+    {
+        return $this->updatePostMeta('ServiceID', $value);
+    }
+
+    /**
+     * @param $value
+     * @return bool
+     */
+    public function updateDossier($value): bool
+    {
+        return $this->updatePostMeta('DossierID', $value);
     }
 
     /**
@@ -128,7 +144,6 @@ class Treatment extends WPCustomPostType
     {
         return ['treatment'];
     }
-
 
     /**
      * @return array

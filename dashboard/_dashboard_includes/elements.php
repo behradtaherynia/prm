@@ -31,7 +31,6 @@ function createRadio($name, $options, $default = ''): string
     $html = '';
     foreach ($options as $label => $value) {
         $value = htmlentities($value);
-        var_ex($value);
         $html .= '<input type="radio" ';
         if ($value == $default) {
             $html .= ' checked="checked" ';
